@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
 
       - name: Install dependencies
         shell: bash
@@ -38,6 +41,8 @@ jobs:
             --windows-icon-from-ico=src/presentation/resources/App.ico \
             --windows-company-name="K-Maths" \
             --windows-product-name="K-Maths Payment Management System" \
+            --windows-file-version=1.0.0.0 \
+            --windows-product-version=1.0.0.0 \
             --include-module=PySide6.QtWebEngineCore \
             --include-package=easyocr \
             --include-package=torch \
@@ -83,6 +88,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
 
       - name: Install Linux build tools
         run: |
