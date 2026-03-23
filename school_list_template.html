@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>School Attendance Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: white;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px auto;
+            display: block;
+        }
+        
+        .title h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+        }
+        
+        .title h2 {
+            font-size: 18px;
+            font-weight: normal;
+            margin: 10px 0 0 0;
+            color: #666;
+        }
+        
+        .summary {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .summary h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            margin: 5px 10px;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .grade-section {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        
+        .grade-header {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .grade-count {
+            font-size: 14px;
+            font-weight: normal;
+            background-color: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 15px;
+        }
+        
+        .class-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0;
+        }
+        
+        .class-table th {
+            background-color: #e3f2fd;
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        
+        .class-table td {
+            border: 1px solid #333;
+            padding: 6px;
+            text-align: left;
+            height: 40px;
+            vertical-align: middle;
+            font-size: 11px;
+        }
+        
+        .name-cell {
+            width: 180px;
+            text-align: left;
+        }
+        
+        .week-cell {
+            width: 60px;
+            text-align: center;
+        }
+        
+        .date-header {
+            font-size: 10px;
+            line-height: 1.2;
+        }
+        
+        .signature-row {
+            height: 45px;
+        }
+        
+        .grade-alt .grade-header {
+            background-color: #4CAF50;
+        }
+        
+        .grade-alt .class-table th {
+            background-color: #e8f5e9;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #999;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        
+        @media print {
+            body { margin: 10px; }
+            .grade-section { page-break-inside: avoid; }
+            .class-table { font-size: 9px; }
+            .class-table th { padding: 4px; }
+            .class-table td { padding: 4px; height: 35px; }
+            .grade-header { background-color: #333 !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo_placeholder.png" alt="School Logo" class="logo">
+        <div class="title">
+            <h1>School Attendance Register</h1>
+            <h2>{{MONTH_YEAR}}</h2>
+        </div>
+    </div>
+    
+    <div class="summary">
+        <h3>School Summary</h3>
+        <div class="summary-stats">
+            <div class="stat-item">
+                <div class="stat-number">{{TOTAL_LEARNERS}}</div>
+                <div class="stat-label">Total Learners</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{TOTAL_GRADES}}</div>
+                <div class="stat-label">Grades</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{WEEK_COUNT}}</div>
+                <div class="stat-label">Weeks</div>
+            </div>
+        </div>
+    </div>
+    
+    {{GRADE_SECTIONS}}
+    
+    <div class="footer">
+        Generated on {{GENERATED_DATE}} | K-Maths Learner Management System
+    </div>
+</body>
+</html>
