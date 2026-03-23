@@ -56,7 +56,7 @@ jobs:
             --include-data-dir=src/ui/config=ui/config \
             --include-data-file=class_list_template.html=class_list_template.html \
             --include-data-file=school_list_template.html=school_list_template.html \
-            --include-qt-plugins=imageformats,platforms,styles,sqldrivers \
+            --include-qt-plugins=imageformats,platforms,sqldrivers \
             --nofollow-import-to=tkinter,test,unittest,pytest,setuptools,pip,wheel \
             --output-dir=Nuitka_Build/windows \
             --output-filename="K-Maths Payment.exe" \
