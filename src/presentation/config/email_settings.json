@@ -1,0 +1,19 @@
+{
+    "email_enabled": "false",
+    "smtp_user": "",
+    "smtp_password": "",
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": "587",
+    "smtp_tls": "true",
+    "imap_user": "",
+    "imap_password": "",
+    "imap_host": "imap.gmail.com",
+    "imap_port": "993",
+    "imap_tls": "true",
+    "bank_email_sender": "",
+    "admin_email": "",
+    "payment_subject": "Payment Received - Thank You for {learner_name}'s Payment",
+    "payment_body": "Dear Parent/Guardian,\n\nWe are pleased to confirm that we have received your payment for {learner_name}.\n\nPayment Details:\nLearner: {learner_name}\nAmount: R{amount:.2f}\nDate: {payment_date}\n\nThank you for your continued support.\n\nBest regards,\nPro K-Maths Administration",
+    "ocr_subject": "OCR Processing Failed - {document_type} Document",
+    "ocr_body": "Dear Administrator,\n\nThe system was unable to automatically process a {document_type} document using OCR.\n\nDocument Details:\nDocument Type: {document_type}\nFile Name: {filename}\n\nPlease review and enter the information manually.\n\nBest regards,\nPro K-Maths System"
+}

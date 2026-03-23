@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Statement {{ statement_number }}</title>
+    <style>
+        {{ statement_style | safe }}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <table class="header-layout" role="presentation">
+            <tr>
+                <td class="header-main">
+                    <table class="company-info-layout" role="presentation">
+                        <tr>
+                            {% if logo_src %}
+                            <td class="logo-cell">
+                                <div class="logo">
+                                    <img src="{{ logo_src }}" alt="Logo">
+                                </div>
+                            </td>
+                            {% endif %}
+                            <td class="company-details-cell">
+                                <div class="company-details">
+                                    {% if company_address %}
+                                    <div class="address-section">{{ company_address | replace('\n', '<br>') | safe }}</div>
+                                    {% endif %}
+                                    {% if company_contact %}
+                                    <div class="contact-section">{{ company_contact }}</div>
+                                    {% endif %}
+                                    {% if prepared_by_user %}
+                                    <div class="prepared-by">Prepared by: {{ prepared_by_user }}</div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="statement-header-cell">
+                    <div class="statement-header">
+                        <div class="statement-title">STATEMENT</div>
+                        <div class="statement-meta-grid">
+                            <div class="statement-meta-item">
+                                <span class="statement-meta-label">Date</span>
+                                <span class="statement-meta-value">{{ statement_date_str }}</span>
+                            </div>
+                            <div class="statement-meta-item">
+                                <span class="statement-meta-label">Statement No.</span>
+                                <span class="statement-meta-value">{{ statement_number }}</span>
+                            </div>
+                            {% if is_family_statement %}
+                            <div class="statement-meta-item">
+                                <span class="statement-meta-label">Family Account</span>
+                                <span class="statement-meta-value">{{ family_acc_no }}</span>
+                            </div>
+                            <div class="statement-meta-item">
+                                <span class="statement-meta-label">Payment Mode</span>
+                                <span class="statement-meta-value">{{ payment_terms_display }}</span>
+                            </div>
+                            {% else %}
+                            <div class="statement-meta-item">
+                                <span class="statement-meta-label">Learner ID</span>
+                                <span class="statement-meta-value">{{ learner_id_display }}</span>
+                            </div>
+                            <div class="statement-meta-item">
+                                <span class="statement-meta-label">Payment Terms</span>
+                                <span class="statement-meta-value">{{ payment_terms_display }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="overview-table" role="presentation">
+        <tr>
+            <td class="overview-customer-cell">
+                <div class="customer-section">
+                    <div class="section-heading">To</div>
+                    <div class="recipient-line">{{ recipient_line }}</div>
+                    {% if is_family_statement %}
+                    <div class="recipient-meta">{{ recipient_role }} learners: {{ learner_list_display }}</div>
+                    {% else %}
+                    <div class="recipient-meta">{{ recipient_role }} {{ learner_name }} {{ learner_surname }}, Grade {{ learner_grade }}</div>
+                    {% endif %}
+                </div>
+            </td>
+            <td class="overview-status-cell">
+                <div class="account-status {{ overdue_amount_class }}">
+                    <div class="status-label">{{ amount_due_message }}</div>
+                    <div class="status-value {{ amount_due_class }}">
+                        {% if amount_due_message == "Account Up-to-Date" %}
+                        R 0.00
+                        {% else %}
+                        {{ total_due_formatted }}
+                        {% endif %}
+                    </div>
+                    <div class="status-meta">
+                        {% if final_amount_due > 0 %}
+                            {% if due_date_notice %}
+                            {{ due_date_notice }}
+                            {% else %}
+                            Due by {{ due_date_str }}
+                            {% endif %}
+                        {% elif final_amount_due < 0 %}
+                        Credit will carry forward
+                        {% else %}
+                        No payment outstanding
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    {% if discount_info %}
+    <div class="discount-info">
+        {{ discount_info }}
+    </div>
+    {% endif %}
+
+    <div class="summary-strip">
+        <div class="summary-strip-head">
+            <div class="summary-strip-title">Statement Summary</div>
+            <div class="summary-strip-period">{{ statement_period_label }}</div>
+        </div>
+        <div class="summary-strip-metrics">
+            <div class="summary-inline-card">
+                <span class="summary-inline-label">Balance Brought Forward</span>
+                <span class="summary-inline-value">
+                    R {% if balance_brought_forward_overall is defined %}{{ "%.2f"|format(balance_brought_forward_overall) }}{% else %}0.00{% endif %}
+                </span>
+            </div>
+            <div class="summary-inline-card">
+                <span class="summary-inline-label">Charges</span>
+                <span class="summary-inline-value charge">
+                    R {% if total_charges is defined %}{{ "%.2f"|format(total_charges) }}{% else %}0.00{% endif %}
+                </span>
+            </div>
+            <div class="summary-inline-card">
+                <span class="summary-inline-label">Payments</span>
+                <span class="summary-inline-value payment">
+                    R {% if total_payments is defined %}{{ "%.2f"|format(total_payments) }}{% else %}0.00{% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <table class="description-table">
+        <thead><tr>
+            <th>Date</th><th>Description</th><th class="amount">Charges (R)</th><th class="amount">Payments (R)</th><th class="amount">Balance (R)</th>
+        </tr></thead>
+        <tbody>
+        {% if monthly_summaries %}
+            {% for month_summary in monthly_summaries %}
+            <tr class="month-header">
+                <td colspan="5"><strong>{{ month_summary.month_year_str }}</strong></td>
+            </tr>
+            <tr class="balance-brought-forward-row">
+                <td></td>
+                <td>Balance Brought Forward</td>
+                <td class="amount"></td>
+                <td class="amount"></td>
+                <td class="amount">{{ month_summary.balance_brought_forward_formatted }}</td>
+            </tr>
+            {% if month_summary.has_transactions %}
+                {% for item in month_summary.transactions %}
+                <tr class="transaction-row">
+                    <td>{{ item.date_str }}</td>
+                    <td>{{ item.desc }}</td>
+                    <td class="amount charge">{% if item.charge_amt %}{{ "%.2f"|format(item.charge_amt) }}{% endif %}</td>
+                    <td class="amount payment">{% if item.payment_amt %}{{ "%.2f"|format(item.payment_amt) }}{% endif %}</td>
+                    <td class="amount {% if item.running_balance > 0 %}balance-positive{% elif item.running_balance < 0 %}balance-negative{% else %}balance-zero{% endif %}">{{ "%.2f"|format(item.running_balance) }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+            <tr class="empty-month-row">
+                <td colspan="4" class="empty-state">No transactions for this month.</td>
+                <td class="amount balance-zero">{{ month_summary.closing_balance_formatted }}</td>
+            </tr>
+            {% endif %}
+            {% if loop.last %}
+            <tr class="semester-total-row">
+                <td colspan="4" class="semester-total-label"><strong>Semester Closing Balance</strong></td>
+                <td class="amount {% if semester_closing_balance > 0 %}balance-positive{% elif semester_closing_balance < 0 %}balance-negative{% else %}balance-zero{% endif %}">
+                    <strong>{{ semester_closing_balance_formatted }}</strong>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="5" class="empty-state">No transactions found.</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    {% set has_payment_details = bank_name or account_holder or account_number or payment_reference %}
+    {% if has_payment_details %}
+    <div class="bank-details-section">
+        <div class="section-heading">Payment Details</div>
+        <div class="bank-details-grid">
+        {% if bank_name %}
+        <div class="bank-detail-chip">
+            <span class="detail-label">Bank</span>
+            <span class="detail-value">{{ bank_name }}</span>
+        </div>
+        {% endif %}
+        {% if account_holder %}
+        <div class="bank-detail-chip">
+            <span class="detail-label">Account Holder</span>
+            <span class="detail-value">{{ account_holder }}</span>
+        </div>
+        {% endif %}
+        {% if account_number %}
+        <div class="bank-detail-chip">
+            <span class="detail-label">Account No.</span>
+            <span class="detail-value">{{ account_number }}</span>
+        </div>
+        {% endif %}
+        {% if payment_reference %}
+        <div class="bank-detail-chip">
+            <span class="detail-label">Reference</span>
+            <span class="detail-value">{{ payment_reference }}</span>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if statement_message or thank_you_message %}
+    <div class="footer-section">
+        {% if statement_message %}
+        <div>{{ statement_message | e | replace('\n', '<br>') | safe }}</div>
+        {% endif %}
+        {% if thank_you_message %}
+        <div>{{ thank_you_message | e | replace('\n', '<br>') | safe }}</div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

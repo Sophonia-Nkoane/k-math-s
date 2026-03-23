@@ -1,0 +1,546 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@page {
+    size: A4;
+    margin: 10mm 9mm 10mm 9mm;
+}
+
+html,
+body {
+    background: #ffffff;
+}
+
+body {
+    font-family: Arial, "Segoe UI", sans-serif;
+    font-size: 8.6pt;
+    line-height: 1.25;
+    color: #243746;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.header {
+    border-bottom: 2px solid #4c8dae;
+    padding-bottom: 6pt;
+    margin-bottom: 8pt;
+}
+
+.header-layout,
+.company-info-layout,
+.overview-table,
+.semester-summary-header-table,
+.summary-metrics-table,
+.statement-details-table,
+.bank-details-table,
+.description-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.header-layout td,
+.company-info-layout td,
+.overview-table td,
+.semester-summary-header-table td,
+.summary-metrics-table td,
+.bank-details-table td {
+    vertical-align: top;
+}
+
+.header-main {
+    width: 60%;
+    padding-right: 10pt;
+}
+
+.statement-header-cell {
+    width: 40%;
+}
+
+.logo-cell {
+    width: 240pt;
+    padding-right: 14pt;
+}
+
+.logo {
+    width: 240pt;
+    line-height: 0;
+}
+
+.logo img {
+    display: block;
+    width: 240pt;
+    max-width: 100%;
+    height: auto;
+}
+
+.company-details {
+    width: 100%;
+}
+
+.company-details-cell {
+    vertical-align: middle;
+}
+
+.address-section,
+.contact-section,
+.prepared-by {
+    font-size: 7.1pt;
+    line-height: 1.4;
+    color: #566c7d;
+}
+
+.address-section {
+    font-weight: 700;
+    color: #213747;
+    margin-bottom: 3pt;
+}
+
+.contact-section {
+    margin-bottom: 3pt;
+}
+
+.prepared-by {
+    font-weight: 700;
+}
+
+.statement-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5pt;
+}
+
+.statement-title {
+    font-size: 19pt;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #4c8dae;
+    text-transform: uppercase;
+    text-align: right;
+}
+
+.statement-meta-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4pt;
+}
+
+.statement-meta-item {
+    width: calc(50% - 2pt);
+    border: 1px solid #c3d5e0;
+    background: #f3f9fc;
+    padding: 4pt 5pt;
+    text-align: left;
+}
+
+.statement-meta-label {
+    display: block;
+    margin-bottom: 1pt;
+    font-size: 6.6pt;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #668091;
+}
+
+.statement-meta-value {
+    display: block;
+    font-size: 7.3pt;
+    line-height: 1.15;
+    font-weight: 700;
+    color: #243746;
+    overflow-wrap: anywhere;
+}
+
+.statement-details-table {
+    font-size: 8pt;
+    margin-left: auto;
+}
+
+.statement-details-table th,
+.statement-details-table td {
+    border: 1px solid #b7c7d3;
+    padding: 3pt 5pt;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.statement-details-table th {
+    width: 34%;
+    color: #2d4f64;
+    background: #edf6fb;
+    font-weight: 700;
+}
+
+.statement-details-table td {
+    background: #ffffff;
+    color: #243746;
+}
+
+.overview-table {
+    margin-bottom: 8pt;
+}
+
+.overview-customer-cell {
+    width: 69%;
+    padding-right: 8pt;
+}
+
+.overview-status-cell {
+    width: 31%;
+}
+
+.customer-section {
+    min-height: 52pt;
+    border: 1px solid #bcd8e6;
+    border-left: 3px solid #4c8dae;
+    background: #eef7fb;
+    padding: 8pt 10pt;
+}
+
+.section-heading {
+    font-size: 6.9pt;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #4c8dae;
+    margin-bottom: 5pt;
+}
+
+.section-heading::before,
+.account-status::before {
+    content: none;
+}
+
+.recipient-line {
+    font-size: 9.4pt;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #243746;
+    margin-bottom: 3pt;
+}
+
+.recipient-meta {
+    font-size: 7.2pt;
+    color: #637b8c;
+}
+
+.account-status {
+    min-height: 52pt;
+    border: 1px solid #d7e3ea;
+    background: #ffffff;
+    padding: 8pt 10pt;
+    text-align: right;
+}
+
+.account-status.overdue-amount-red {
+    border-color: #f1caca;
+    border-left: 3px solid #d9534f;
+    background: #fff8f8;
+}
+
+.account-status.overdue-amount-amber {
+    border-color: #ead5a9;
+    border-left: 3px solid #e79a2c;
+    background: #fffaf1;
+}
+
+.account-status.overdue-amount-green {
+    border-color: #cfe5d2;
+    border-left: 3px solid #4d9b63;
+    background: #f7fdf8;
+}
+
+.status-label {
+    font-size: 6.9pt;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #6b7f90;
+    margin-bottom: 4pt;
+}
+
+.status-value {
+    font-size: 17pt;
+    line-height: 1.05;
+    font-weight: 800;
+    color: #243746;
+}
+
+.status-meta {
+    margin-top: 4pt;
+    font-size: 6.9pt;
+    color: #6b7f90;
+    font-weight: 600;
+}
+
+.discount-info {
+    margin-bottom: 8pt;
+    padding: 5pt 7pt;
+    border-left: 3px solid #e5b13d;
+    background: #fff8e7;
+    color: #84682d;
+    font-size: 7.2pt;
+}
+
+.summary-strip {
+    border: 1px solid #cde2eb;
+    background: #f6fbfd;
+    padding: 7pt 8pt;
+    margin-bottom: 8pt;
+}
+
+.summary-strip-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8pt;
+    margin-bottom: 5pt;
+}
+
+.summary-strip-title {
+    font-size: 6.9pt;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #6b7f90;
+}
+
+.summary-strip-period {
+    font-size: 9.8pt;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #3f82a5;
+    text-align: right;
+}
+
+.summary-strip-metrics {
+    display: flex;
+    gap: 6pt;
+}
+
+.summary-inline-card {
+    flex: 1 1 0;
+    min-width: 0;
+    border-left: 3px solid #4c8dae;
+    background: #ffffff;
+    padding: 5pt 6pt;
+}
+
+.summary-inline-label {
+    display: block;
+    margin-bottom: 2pt;
+    font-size: 6.7pt;
+    line-height: 1.05;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7f90;
+}
+
+.summary-inline-value {
+    display: block;
+    font-size: 9.1pt;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #243746;
+}
+
+.charge {
+    color: #2b7ddd;
+}
+
+.payment {
+    color: #379647;
+}
+
+.description-table {
+    font-size: 7.2pt;
+    margin-bottom: 8pt;
+}
+
+.description-table th,
+.description-table td {
+    border: 1px solid #b7c7d3;
+    padding: 3pt 5pt;
+    text-align: left;
+    vertical-align: top;
+}
+
+.description-table thead th {
+    background: #d7edf7;
+    color: #24465b;
+    font-size: 6.5pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.description-table th:nth-child(1),
+.description-table td:nth-child(1) {
+    width: 11%;
+}
+
+.description-table th:nth-child(2),
+.description-table td:nth-child(2) {
+    width: 44%;
+}
+
+.description-table th:nth-child(3),
+.description-table td:nth-child(3),
+.description-table th:nth-child(4),
+.description-table td:nth-child(4),
+.description-table th:nth-child(5),
+.description-table td:nth-child(5) {
+    width: 15%;
+}
+
+.description-table td.amount,
+.description-table th.amount {
+    text-align: right;
+    white-space: nowrap;
+    font-family: "Courier New", monospace;
+}
+
+.month-header td {
+    border-color: #4c8dae;
+    background: #4c8dae;
+    color: #ffffff;
+    font-size: 7.4pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 4pt 5pt;
+}
+
+.balance-brought-forward-row td {
+    background: #f5f8fa;
+    color: #667d8c;
+    font-style: italic;
+    padding-top: 2.5pt;
+    padding-bottom: 2.5pt;
+}
+
+.transaction-row td {
+    background: #ffffff;
+}
+
+.empty-month-row td {
+    background: #fbfdff;
+}
+
+.semester-total-row td {
+    background: #eef7fb;
+    font-weight: 800;
+    border-top: 2px solid #4c8dae;
+}
+
+.semester-total-label {
+    text-align: right;
+    color: #2f607b;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.balance-positive {
+    color: #d9534f;
+    font-weight: 800;
+}
+
+.balance-negative {
+    color: #2f9d57;
+    font-weight: 800;
+}
+
+.balance-zero {
+    color: #6f8493;
+}
+
+.month-footer td {
+    background: #f3f9fc;
+    font-weight: 800;
+}
+
+.month-footer-label {
+    text-align: right;
+    color: #3f82a5;
+}
+
+.empty-state {
+    text-align: center;
+    color: #6f8493;
+    font-style: italic;
+    padding: 6pt;
+}
+
+.bank-details-section {
+    border: 1px solid #cde2eb;
+    background: #eef7fb;
+    padding: 7pt 8pt;
+    margin-bottom: 8pt;
+}
+
+.bank-details-section .section-heading {
+    margin-bottom: 5pt;
+}
+
+.bank-details-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4pt 6pt;
+}
+
+.bank-detail-chip {
+    width: calc(50% - 3pt);
+    min-width: 0;
+    border: 1px solid #d7e6ee;
+    background: #ffffff;
+    padding: 4pt 6pt;
+}
+
+.detail-label {
+    display: block;
+    width: auto;
+    margin-bottom: 2pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #547183;
+    letter-spacing: 0.5px;
+    font-size: 6.6pt;
+}
+
+.detail-value {
+    display: block;
+    color: #243746;
+    font-size: 7.2pt;
+    overflow-wrap: anywhere;
+}
+
+.footer-section {
+    margin-top: 6pt;
+    padding-top: 5pt;
+    border-top: 1px solid #d8e5ec;
+    font-size: 7.1pt;
+    line-height: 1.35;
+    color: #607785;
+    text-align: center;
+}
+
+.footer-section > div + div {
+    margin-top: 2pt;
+}

@@ -1,0 +1,12 @@
+{
+    "logo_path": "src/presentation/resources/statement_logo.png",
+    "address": "13 a",
+    "whatsapp": "07323456789",
+    "phone": "073123456789",
+    "email": "t@gmail.com",
+    "statement_message": "please",
+    "thank_you_message": "thank you",
+    "bank_name": "FNB",
+    "account_holder": "k-maths",
+    "account_number": "1234569"
+}

@@ -1,0 +1,19 @@
+{
+    "email_enabled": "",
+    "smtp_user": "",
+    "smtp_password": "",
+    "smtp_host": "",
+    "smtp_port": "",
+    "smtp_tls": "",
+    "imap_user": "",
+    "imap_password": "",
+    "imap_host": "",
+    "imap_port": "",
+    "imap_tls": "",
+    "bank_email_sender": "",
+    "admin_email": "",
+    "payment_subject": "",
+    "payment_body": "",
+    "ocr_subject": "",
+    "ocr_body": ""
+}
