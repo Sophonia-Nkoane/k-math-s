@@ -1,135 +1,135 @@
 name: Build Desktop Apps
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+    push:
+      branches:
+        - main
+    workflow_dispatch:
 
-jobs:
-  build-windows:
-    name: Build Windows Desktop App
-    runs-on: windows-latest
+  jobs:
+    build-windows:
+      name: Build Windows Desktop App
+      runs-on: windows-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+        - name: Setup Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: "3.11"
 
-      - name: Install dependencies
-        shell: bash
-        run: |
-          python -m pip install --upgrade pip
-          pip install nuitka ordered-set zstandard
-          pip install -r requirements.txt
+        - name: Install dependencies
+          shell: bash
+          run: |
+            python -m pip install --upgrade pip
+            pip install nuitka ordered-set zstandard
+            pip install -r requirements.txt
 
-      - name: Build Windows app
-        shell: bash
-        run: |
-          python -m nuitka \
-            --standalone \
-            --enable-plugin=pyside6 \
-            --disable-plugin=anti-bloat \
-            --windows-console-mode=disable \
-            --windows-icon-from-ico=src/presentation/resources/App.ico \
-            --windows-company-name="K-Maths" \
-            --windows-product-name="K-Maths Payment Management System" \
-            --include-module=PySide6.QtWebEngineCore \
-            --include-package=easyocr \
-            --include-package=torch \
-            --include-package=torchvision \
-            --include-package=paddleocr \
-            --include-package=paddle \
-            --include-package=numpy \
-            --include-package=PIL \
-            --include-package=mysql \
-            --include-package=bcrypt \
-            --include-package=fitz \
-            --include-data-dir=src/presentation/resources=presentation/resources \
-            --include-data-dir=src/presentation/template=presentation/template \
-            --include-data-dir=src/presentation/styles=presentation/styles \
-            --include-data-dir=src/presentation/config=presentation/config \
-            --include-data-dir=src/ui/config=ui/config \
-            --include-data-file=class_list_template.html=class_list_template.html \
-            --include-data-file=school_list_template.html=school_list_template.html \
-            --include-qt-plugins=imageformats,platforms,sqldrivers \
-            --nofollow-import-to=tkinter,test,unittest,pytest,setuptools,pip,wheel \
-            --output-dir=Nuitka_Build/windows \
-            --output-filename="K-Maths Payment.exe" \
-            src/main.py
+        - name: Build Windows app
+          shell: bash
+          run: |
+            python -m nuitka \
+              --standalone \
+              --enable-plugin=pyside6 \
+              --disable-plugin=anti-bloat \
+              --windows-console-mode=disable \
+              --windows-icon-from-ico=src/presentation/resources/App.ico \
+              --windows-company-name="K-Maths" \
+              --windows-product-name="K-Maths Payment Management System" \
+              --include-module=PySide6.QtWebEngineCore \
+              --include-package=easyocr \
+              --include-package=torch \
+              --include-package=torchvision \
+              --include-package=paddleocr \
+              --include-package=paddle \
+              --include-package=numpy \
+              --include-package=PIL \
+              --include-package=mysql \
+              --include-package=bcrypt \
+              --include-package=fitz \
+              --include-data-dir=src/presentation/resources=presentation/resources \
+              --include-data-dir=src/presentation/template=presentation/template \
+              --include-data-dir=src/presentation/styles=presentation/styles \
+              --include-data-dir=src/presentation/config=presentation/config \
+              --include-data-dir=src/ui/config=ui/config \
+              --include-data-file=class_list_template.html=class_list_template.html \
+              --include-data-file=school_list_template.html=school_list_template.html \
+              --include-qt-plugins=imageformats,platforms,sqldrivers \
+              --nofollow-import-to=tkinter,test,unittest,pytest,setuptools,pip,wheel \
+              --output-dir=Nuitka_Build/windows \
+              --output-filename="K-Maths Payment.exe" \
+              src/main.py
 
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: k-maths-windows
-          path: |
-            Nuitka_Build/windows/*.exe
-            Nuitka_Build/windows/*.dist/**
-          if-no-files-found: error
+        - name: Upload Windows artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: k-maths-windows
+            path: |
+              Nuitka_Build/windows/*.exe
+              Nuitka_Build/windows/*.dist/**
+            if-no-files-found: error
 
-  build-linux:
-    name: Build Linux Desktop App
-    runs-on: ubuntu-latest
+    build-linux:
+      name: Build Linux Desktop App
+      runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+        - name: Setup Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: "3.11"
 
-      - name: Install Linux build tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y patchelf
+        - name: Install Linux build tools
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y patchelf
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install nuitka ordered-set zstandard
-          pip install -r requirements.txt
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install nuitka ordered-set zstandard
+            pip install -r requirements.txt
 
-      - name: Build Linux app
-        run: |
-          python -m nuitka \
-            --standalone \
-            --enable-plugin=pyside6 \
-            --disable-plugin=anti-bloat \
-            --include-module=PySide6.QtWebEngineCore \
-            --include-package=easyocr \
-            --include-package=torch \
-            --include-package=torchvision \
-            --include-package=paddleocr \
-            --include-package=paddle \
-            --include-package=numpy \
-            --include-package=PIL \
-            --include-package=mysql \
-            --include-package=bcrypt \
-            --include-package=fitz \
-            --include-data-dir=src/presentation/resources=presentation/resources \
-            --include-data-dir=src/presentation/template=presentation/template \
-            --include-data-dir=src/presentation/styles=presentation/styles \
-            --include-data-dir=src/presentation/config=presentation/config \
-            --include-data-dir=src/ui/config=ui/config \
-            --include-data-file=class_list_template.html=class_list_template.html \
-            --include-data-file=school_list_template.html=school_list_template.html \
-            --include-qt-plugins=imageformats,platforms,styles,sqldrivers \
-            --nofollow-import-to=tkinter,test,unittest,pytest,setuptools,pip,wheel \
-            --output-dir=Nuitka_Build/linux \
-            --output-filename=k-maths-payment \
-            src/main.py
+        - name: Build Linux app
+          run: |
+            python -m nuitka \
+              --standalone \
+              --enable-plugin=pyside6 \
+              --disable-plugin=anti-bloat \
+              --include-module=PySide6.QtWebEngineCore \
+              --include-package=easyocr \
+              --include-package=torch \
+              --include-package=torchvision \
+              --include-package=paddleocr \
+              --include-package=paddle \
+              --include-package=numpy \
+              --include-package=PIL \
+              --include-package=mysql \
+              --include-package=bcrypt \
+              --include-package=fitz \
+              --include-data-dir=src/presentation/resources=presentation/resources \
+              --include-data-dir=src/presentation/template=presentation/template \
+              --include-data-dir=src/presentation/styles=presentation/styles \
+              --include-data-dir=src/presentation/config=presentation/config \
+              --include-data-dir=src/ui/config=ui/config \
+              --include-data-file=class_list_template.html=class_list_template.html \
+              --include-data-file=school_list_template.html=school_list_template.html \
+              --include-qt-plugins=imageformats,platforms,sqldrivers \
+              --nofollow-import-to=tkinter,test,unittest,pytest,setuptools,pip,wheel \
+              --output-dir=Nuitka_Build/linux \
+              --output-filename=k-maths-payment \
+              src/main.py
 
-      - name: Upload Linux artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: k-maths-linux
-          path: |
-            Nuitka_Build/linux/k-maths-payment
-            Nuitka_Build/linux/k-maths-payment.dist/**
-          if-no-files-found: error
+        - name: Upload Linux artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: k-maths-linux
+            path: |
+              Nuitka_Build/linux/k-maths-payment
+              Nuitka_Build/linux/k-maths-payment.dist/**
+            if-no-files-found: error
